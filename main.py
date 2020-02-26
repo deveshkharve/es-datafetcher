@@ -53,14 +53,14 @@ def getData():
     results = []
     # ES 6.x requires an explicit Content-Type header
     # Make the signed HTTP request
-    esRes = search(url, query)
+    esRes = search(query)
 
     results = results + parseData(esRes)
 
     while len(esRes['hits']['hits']) > 0:
         resLen = len(esRes['hits']['hits'])
         query['search_after'] = esRes['hits']['hits'][resLen-1]['sort']
-        esRes = search(url, query)
+        esRes = search(query)
         results = results + parseData(esRes)
 
     return results
