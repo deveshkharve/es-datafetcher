@@ -2,6 +2,8 @@ import pandas as pd
 import requests
 from requests_aws4auth import AWS4Auth
 import boto3
+import matplotlib.pyplot as plot
+import seaborn
 
 url = 'https://my.elasticsearch.domain/my_awesome_index/_search'
 service = 'es'
@@ -64,3 +66,16 @@ def getData():
         results = results + parseData(esRes)
 
     return results
+
+def fetchData():
+    # get cart products
+    sales_data = pd.DataFrame(getData())
+    sales_data.fillna(0, inplace=True)
+    city_to_price_correlation = sales_data[['city', 'totalAmount']].corr()
+	seaborn.heatmap(
+        city_to_price_correlation,
+        xticklabels=city_to_price_correlation.columns.values,
+        yticklabels=city_to_price_correlation.columns.values
+    )
+    plot.savefig("mygraph1.png", figsize=(1000, 1000), bbox_inches='tight')
+    return
