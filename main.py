@@ -71,7 +71,7 @@ def fetchData():
     # get cart products
     sales_data = pd.DataFrame(getData())
     sales_data.fillna(0, inplace=True)
-    city_to_price_correlation = sales_data[['city', 'totalAmount']].corr()
+    city_to_price_correlation = sales_data[['city', 'productCategory']].corr()
 	seaborn.heatmap(
         city_to_price_correlation,
         xticklabels=city_to_price_correlation.columns.values,
